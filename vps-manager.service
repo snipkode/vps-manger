@@ -1,0 +1,16 @@
+[Unit]
+Description=VPS Manager Application
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/vps-manager
+ExecStart=/usr/bin/node src/server.js
+Restart=always
+RestartSec=10
+Environment=NODE_ENV=production
+Environment=PATH=/usr/bin:/usr/local/bin
+
+[Install]
+WantedBy=multi-user.target
