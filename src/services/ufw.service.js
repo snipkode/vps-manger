@@ -115,14 +115,17 @@ class UFWService {
     } = rule;
 
     try {
-      let command = `ufw ${direction} ${action}`;
+      // Build command with correct UFW syntax
+      // Syntax: ufw allow|deny|reject|limit [in|out] [proto PROTO] [from FROM] [to TO] [port PORT]
+      let command = `ufw ${action}`;
+
+      // Add direction only if it's 'out' (in is default)
+      if (direction && direction === 'out') {
+        command += ` ${direction}`;
+      }
 
       if (protocol && protocol !== 'any') {
         command += ` proto ${protocol}`;
-      }
-
-      if (port) {
-        command += ` port ${port}`;
       }
 
       if (sourceIP) {
@@ -131,15 +134,19 @@ class UFWService {
         command += ' from any';
       }
 
-      if (destinationIP) {
+      if (destinationIP && destinationIP !== 'any') {
         command += ` to ${destinationIP}`;
+      }
+
+      if (port) {
+        command += ` port ${port}`;
       }
 
       // Execute command (non-interactive)
       const { stdout } = await execAsync(`echo "y" | ${command}`);
-      
+
       logger.info(`UFW rule added: ${command}`);
-      
+
       return {
         success: true,
         message: 'Rule added successfully',
@@ -358,14 +365,14 @@ class UFWService {
     } = rule;
 
     try {
-      let command = `ufw insert ${position} ${direction} ${action}`;
+      let command = `ufw insert ${position} ${action}`;
+
+      if (direction && direction !== 'in') {
+        command += ` ${direction}`;
+      }
 
       if (protocol && protocol !== 'any') {
         command += ` proto ${protocol}`;
-      }
-
-      if (port) {
-        command += ` port ${port}`;
       }
 
       if (sourceIP) {
@@ -378,10 +385,14 @@ class UFWService {
         command += ` to ${destinationIP}`;
       }
 
+      if (port) {
+        command += ` port ${port}`;
+      }
+
       const { stdout } = await execAsync(`echo "y" | ${command}`);
-      
+
       logger.info(`UFW rule inserted at ${position}: ${command}`);
-      
+
       return {
         success: true,
         message: 'Rule inserted successfully',

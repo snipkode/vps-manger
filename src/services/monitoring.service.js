@@ -117,10 +117,10 @@ class MonitoringService {
    */
   async getNetworkInfo() {
     try {
-      const [networkInterfaces, networkStats, defaultGateway] = await Promise.all([
+      const [networkInterfaces, networkStats, networkGateway] = await Promise.all([
         si.networkInterfaces(),
         si.networkStats(),
-        si.defaultNetworkInterface()
+        si.networkGatewayDefault()
       ]);
 
       return {
@@ -143,7 +143,7 @@ class MonitoringService {
           rxDropped: ns.rx_dropped,
           txDropped: ns.tx_dropped
         })),
-        defaultInterface: defaultGateway
+        defaultInterface: networkGateway || null
       };
     } catch (error) {
       logger.error('Failed to get network info:', error);
