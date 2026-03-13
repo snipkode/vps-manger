@@ -25,6 +25,15 @@ import { format } from 'date-fns';
 import { auditService } from '../services';
 import { useAuth } from '../context/AuthContext';
 
+const formatDate = (dateString) => {
+  if (!dateString) return 'N/A';
+  try {
+    return format(new Date(dateString), 'MMM d, yyyy HH:mm:ss');
+  } catch (error) {
+    return 'Invalid date';
+  }
+};
+
 const AuditLogs = () => {
   const { user } = useAuth();
   const [logs, setLogs] = useState([]);
@@ -161,10 +170,7 @@ const AuditLogs = () => {
                 {logs.map((log) => (
                   <TableRow key={log.id} hover>
                     <TableCell>
-                      {format(
-                        new Date(log.created_at),
-                        'MMM d, yyyy HH:mm:ss'
-                      )}
+                      {formatDate(log.created_at)}
                     </TableCell>
                     <TableCell>
                       <Chip
