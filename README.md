@@ -1,5 +1,7 @@
 # VPS Manager - WireGuard & Firewall Management Panel
 
+> **Latest Release:** [v1.0.0](https://github.com/snipkode/vps-manger/releases/tag/v1.0.0) - Production Ready 🎉
+
 Aplikasi VPS Panel untuk mengelola WireGuard peers dan firewall dengan akses berbasis departemen (RBAC).
 
 ## 🚀 Fitur Utama
@@ -303,6 +305,31 @@ sudo systemctl enable wg-quick@wg0
 3. **Firewall**: Batasi akses ke port 3000
 4. **Backup**: Backup database secara berkala
 5. **Updates**: Update dependencies secara berkala
+
+## 📦 Changelog
+
+### v1.0.0 - Production Release (March 2026)
+
+**Features:**
+- ✅ WireGuard Peer Management (CRUD + config download)
+- ✅ Firewall Rules (UFW) with bulk apply
+- ✅ System Monitoring (CPU, Memory, Disk, Network)
+- ✅ Audit Logs with filtering
+- ✅ RBAC (4 roles: super_admin, admin, department_head, user)
+- ✅ Department Management (6 default departments)
+- ✅ User Management
+
+**Bug Fixes:**
+- 🐛 Fixed UFW command syntax (`ufw allow proto tcp from any port X`)
+- 🐛 Fixed monitoring service API (systeminformation v5.x compatibility)
+- 🐛 Fixed WireGuardPeer-Department association
+- 🐛 Fixed Audit Logs User model include
+- 🐛 Fixed LinearProgress value prop type (MUI)
+- 🐛 Fixed AuditLogs date formatting (invalid date handling)
+
+**Security:**
+- 🔒 Eruda debugger hidden by default (production)
+- 🔒 Access via: `localStorage.setItem('eruda-active', 'true')` then refresh
 
 ## 📝 License
 

@@ -1,5 +1,7 @@
 # Quick Start Guide - VPS Manager
 
+> **Version:** v1.0.0 (Production Release)
+
 ## ✅ Instalasi Selesai!
 
 Aplikasi VPS Manager untuk WireGuard & Firewall Management dengan RBAC sudah siap digunakan.
@@ -7,9 +9,10 @@ Aplikasi VPS Manager untuk WireGuard & Firewall Management dengan RBAC sudah sia
 ## 📍 Status Instalasi
 
 - ✅ Backend dependencies installed
-- ✅ Frontend built successfully  
+- ✅ Frontend built successfully (production build)
 - ✅ Database seeded dengan 6 departments + 1 admin user
-- ✅ Server test passed
+- ✅ Server running in production mode
+- ✅ Eruda debugger hidden (production security)
 
 ## 🚀 Cara Menjalankan
 
@@ -41,6 +44,21 @@ systemctl enable vps-manager
 
 # Check status
 systemctl status vps-manager
+```
+
+### Dengan PM2 (Alternative)
+```bash
+# Install PM2 globally
+npm install -g pm2
+
+# Start with PM2
+pm2 start /root/vps-manager/src/server.js --name vps-manager
+
+# Save PM2 configuration
+pm2 save
+
+# Setup PM2 startup
+pm2 startup
 ```
 
 ## 🔐 Login Credentials
@@ -172,6 +190,29 @@ npm run seed
 sudo npm start
 ```
 
+## 📦 Release Notes - v1.0.0
+
+**Production Release Features:**
+- WireGuard Peer Management (CRUD + config download)
+- Firewall Rules (UFW) with bulk apply
+- System Monitoring (CPU, Memory, Disk, Network)
+- Audit Logs with filtering and statistics
+- RBAC with 4 roles
+- Department Management
+- User Management
+
+**Security Updates:**
+- Eruda debugger hidden by default
+- Access via browser console: `localStorage.setItem('eruda-active', 'true');` then refresh
+
+**Bug Fixes:**
+- UFW command syntax fixed
+- Monitoring service API fixed (systeminformation v5.x)
+- WireGuardPeer-Department association fixed
+- Audit Logs User model include fixed
+- LinearProgress value prop type fixed
+- AuditLogs date formatting fixed
+
 ## 📞 Support
 
 Untuk pertanyaan atau issue, silakan buat issue di repository ini.
@@ -179,3 +220,5 @@ Untuk pertanyaan atau issue, silakan buat issue di repository ini.
 ---
 
 **VPS Manager v1.0.0** - WireGuard & Firewall Management with RBAC
+
+🔗 GitHub Release: https://github.com/snipkode/vps-manger/releases/tag/v1.0.0
