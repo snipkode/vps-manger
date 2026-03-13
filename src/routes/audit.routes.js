@@ -4,7 +4,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { AuditLog } = require('../database/models');
+const { AuditLog, User } = require('../database/models');
 const authMiddleware = require('../middleware/auth');
 const { authorize } = require('../middleware/rbac');
 const logger = require('../utils/logger');
@@ -44,7 +44,7 @@ router.get('/', authorize('audit:view'), async (req, res) => {
     const { count, rows } = await AuditLog.findAndCountAll({
       where,
       include: [{
-        model: 'User',
+        model: User,
         as: 'user',
         attributes: ['id', 'email', 'full_name']
       }],
@@ -142,7 +142,7 @@ router.get('/:id', authorize('audit:view'), async (req, res) => {
   try {
     const log = await AuditLog.findByPk(req.params.id, {
       include: [{
-        model: 'User',
+        model: User,
         as: 'user',
         attributes: ['id', 'email', 'full_name']
       }]
