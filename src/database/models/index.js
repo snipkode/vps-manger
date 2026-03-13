@@ -17,6 +17,9 @@ const SystemLog = require('./SystemLog');
 Department.hasMany(User, { as: 'users', foreignKey: 'department_id', onDelete: 'SET NULL' });
 User.belongsTo(Department, { as: 'department', foreignKey: 'department_id' });
 
+Department.hasMany(WireGuardPeer, { as: 'peers', foreignKey: 'department_id', onDelete: 'SET NULL' });
+WireGuardPeer.belongsTo(Department, { as: 'department', foreignKey: 'department_id' });
+
 Department.hasMany(FirewallRule, { as: 'firewall_rules', foreignKey: 'department_id', onDelete: 'CASCADE' });
 FirewallRule.belongsTo(Department, { as: 'department', foreignKey: 'department_id' });
 
