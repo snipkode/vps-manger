@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper, Box, Typography, LinearProgress } from '@mui/material';
 
 const StatCard = ({ title, value, total, suffix = '', icon, color = 'primary' }) => {
-  const percentage = total ? ((value / total) * 100).toFixed(0) : 0;
+  const percentage = total ? ((parseFloat(value) / parseFloat(total)) * 100).toFixed(0) : 0;
 
   return (
     <Paper
@@ -50,7 +50,7 @@ const StatCard = ({ title, value, total, suffix = '', icon, color = 'primary' })
         <Box sx={{ width: '100%' }}>
           <LinearProgress
             variant="determinate"
-            value={percentage}
+            value={parseFloat(percentage)}
             color={color}
             sx={{ height: 6, borderRadius: 3 }}
           />

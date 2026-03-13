@@ -128,12 +128,12 @@ const Monitoring = () => {
                   <Box display="flex" justifyContent="space-between" mb={1}>
                     <Typography variant="body2">Usage</Typography>
                     <Typography variant="body2" fontWeight="bold">
-                      {stats.cpu.usage.current.toFixed(1)}%
+                      {parseFloat(stats.cpu.usage.current).toFixed(1)}%
                     </Typography>
                   </Box>
                   <LinearProgress
                     variant="determinate"
-                    value={stats.cpu.usage.current}
+                    value={parseFloat(stats.cpu.usage.current)}
                     color="warning"
                     sx={{ height: 8, borderRadius: 4 }}
                   />
@@ -163,12 +163,12 @@ const Monitoring = () => {
                   <Box display="flex" justifyContent="space-between" mb={1}>
                     <Typography variant="body2">Usage</Typography>
                     <Typography variant="body2" fontWeight="bold">
-                      {stats.memory.usage.percent}%
+                      {parseFloat(stats.memory.usage.percent).toFixed(1)}%
                     </Typography>
                   </Box>
                   <LinearProgress
                     variant="determinate"
-                    value={stats.memory.usage.percent}
+                    value={parseFloat(stats.memory.usage.percent)}
                     color="error"
                     sx={{ height: 8, borderRadius: 4 }}
                   />
@@ -179,13 +179,13 @@ const Monitoring = () => {
                   </Typography>
                   <LinearProgress
                     variant="determinate"
-                    value={stats.memory.swap.usage}
+                    value={parseFloat(stats.memory.swap.usage) || 0}
                     color="info"
                     sx={{ height: 6, borderRadius: 4 }}
                   />
                   <Typography variant="caption" color="text.secondary">
                     {stats.memory.swap.used} / {stats.memory.swap.total} (
-                    {stats.memory.swap.usage}%)
+                    {parseFloat(stats.memory.swap.usage).toFixed(0)}%)
                   </Typography>
                 </Box>
               </>
@@ -223,12 +223,12 @@ const Monitoring = () => {
                         <Box display="flex" alignItems="center" gap={1}>
                           <LinearProgress
                             variant="determinate"
-                            value={disk.usage}
-                            color={disk.usage > 80 ? 'error' : 'primary'}
+                            value={parseFloat(disk.usage) || 0}
+                            color={parseFloat(disk.usage) > 80 ? 'error' : 'primary'}
                             sx={{ width: 100, height: 8, borderRadius: 4 }}
                           />
                           <Typography variant="body2" fontWeight="bold">
-                            {disk.usage}%
+                            {parseFloat(disk.usage).toFixed(0)}%
                           </Typography>
                         </Box>
                       </TableCell>
