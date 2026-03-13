@@ -9,14 +9,18 @@ export default defineConfig({
       transformIndexHtml(html) {
         return html.replace(
           '</head>',
-          `<!-- Eruda Console for Debugging -->
+          `<!-- Eruda Console for Debugging (Hidden by default) -->
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>
       window.addEventListener('load', function() {
         if (typeof eruda !== 'undefined') {
           try {
-            eruda.init();
-            eruda.show();
+            eruda.init({ defaults: { displaySize: 40, transparent: true } });
+            // Eruda is hidden by default in production
+            // Access via console: localStorage.setItem('eruda-active', 'true'); then refresh
+            if (localStorage.getItem('eruda-active') === 'true') {
+              eruda.show();
+            }
           } catch(e) {
             console.error('Eruda init error:', e);
           }
@@ -31,7 +35,7 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'build',
-    sourcemap: true,
+    sourcemap: false,
     minify: 'esbuild',
     rollupOptions: {
       output: {
